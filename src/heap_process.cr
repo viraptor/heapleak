@@ -116,22 +116,6 @@ module HeapLeak
       seen
     end
 
-    def common_objects(max_lowest = 3)
-      lowest = MAX_DIST
-      seen.each { |x|
-        if objects[x].seen_from.as(Set(Int64)).size > 1
-          lowest = objects[x].distance if lowest > objects[x].distance
-        end
-      }
-      if lowest < MAX_DIST
-        lowest = max_lowest
-      end
-      seen.each { |x|
-        seen.delete(x) if objects[x].distance > (lowest+2)
-      }
-      seen
-    end
-
     def remove_objects!(other_heap)
       other_heap.objects.each do |k, v|
         if objects.has_key?(k) && v.class_addr == objects[k].class_addr
