@@ -13,6 +13,16 @@ describe HeapLeak::Heap do
     heap.type_of(0x560a5a537888).should eq("MODULE:Gem")
   end
 
+  it "ignores broken lines" do
+    # ruby corrupts the heap dumps sometimes
+    contents = <<-END
+      {"address":"0x560a5a||||||||||ype":"MODULE", "class":"0x560a5a6c3738", "name":"Gem", "references":[]}
+      {"address":"0x560a5a6c3738", "type":"CLASS", "class":"0x560a5a5c76e0", "name":"Module", "references":[]}
+    END
+    heap = HeapLeak::Heap.new(IO::Memory.new(contents))
+    heap.objects.size.should eq(1)
+  end
+
   it "loads refs" do
     contents = <<-END
       {"address":"0x560a5a537888", "type":"MODULE", "class":"0x560a5a6c3738", "name":"Gem", "references":["0x560a5a5378b0"]}
