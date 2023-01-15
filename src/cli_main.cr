@@ -34,7 +34,7 @@ elsif action == "root"
   sample_addresses = ARGV[2..].map {|x| x.to_i64(prefix: true)}
 
   visible_objects = heap.mark_distance_and_visibility(sample_addresses)
-  print_dot_diagram(heap, visible_objects, sample_addresses, max_distance=3)
+  print_dot_diagram(heap, visible_objects, sample_addresses)
 else
   puts "#{"Usage:".colorize(:light_blue)} #{PROGRAM_NAME.colorize(:dark_gray)} ACTION [ARGUMENTS]"
   puts ""

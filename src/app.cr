@@ -21,7 +21,10 @@ def leaked_objects(heap_A : HeapLeak::Heap, heap_B : HeapLeak::Heap, heap_C : He
   new_heap
 end
 
-def print_dot_diagram(heap, visible_objects, sample_addresses, max_distance)
+def print_dot_diagram(heap, visible_objects, sample_addresses)
+  closest_common = visible_objects.select { |o| (heap.objects[o].seen_from || "").size > 1 }.min_by { |o| heap.objects[o].distance }
+  max_distance = heap.objects[closest_common].distance
+
   puts("# using a heap with #{heap.objects.size} objects")
   puts("# a pool of #{visible_objects.size} interesting objects")
   puts("# and #{sample_addresses.size} initial leaked objects")

@@ -98,12 +98,11 @@ module HeapLeak
       to_process = sample_addresses.clone
       seen = Set(HEAP_ADDRESS).new
 
-      max_distance = 0
+      lowest_common = MAX_DIST
 
       while !to_process.empty?
         current = to_process.pop
         next_distance = objects[current].distance + 1
-        max_distance = next_distance if next_distance > max_distance
         seen << current
         next if next_distance > distance_limit
         back_refs.fetch(current, [] of HEAP_ADDRESS).each { |x|
