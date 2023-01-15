@@ -63,7 +63,7 @@ module HeapLeak
           (obj.references || ([] of String)).map {|x| x.to_i64(prefix: true)}
         )
         addr = obj.address.as(String).to_i64(prefix: true)
-        if obj.type == "CLASS" && !(name=obj.name).nil?
+        if (obj.type == "CLASS" || obj.type == "MODULE") && !(name=obj.name).nil?
           types[addr] = name
         end
 
@@ -82,6 +82,8 @@ module HeapLeak
       obj = objects[addr]
       if obj.class_name == "CLASS"
         "CLASS:#{types.fetch(addr, "<unknown>")}"
+      elsif obj.class_name == "MODULE"
+        "MODULE:#{types.fetch(addr, "<unknown>")}"
       elsif obj.class_name == "OBJECT"
         types.fetch(obj.class_addr, "<unknown>")
       else
