@@ -1,18 +1,2 @@
 version: 2.0
-shards:
-  callback:
-    git: https://github.com/mosop/callback.git
-    version: 0.6.3
-
-  cli:
-    git: https://github.com/mosop/cli.git
-    version: 0.7.0
-
-  optarg:
-    git: https://github.com/mosop/optarg.git
-    version: 0.5.8
-
-  string_inflection:
-    git: https://github.com/mosop/string_inflection.git
-    version: 0.2.1
-
+shards: {}
