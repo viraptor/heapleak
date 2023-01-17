@@ -45,7 +45,7 @@ def print_dot_diagram(heap, visible_objects, sample_addresses, output)
     current = heap.objects[current_addr]
     next if sample_addresses.includes? current_addr
     next if current.distance > max_distance
-    output.puts("\"0x#{current_addr.to_s(16)}\" [label=\"0x#{current_addr.to_s(16)}\\n#{current.class_name}\\n#{current.file}:#{current.line}\"] ;")
+    output.puts("\"0x#{current_addr.to_s(16)}\" [label=\"0x#{current_addr.to_s(16)}\\n#{heap.type_of(current_addr)}\\n#{current.file}:#{current.line}\"] ;")
   }
 
   output.puts("# links")

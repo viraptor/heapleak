@@ -14,7 +14,7 @@ module HeapLeak
     property class_addr : HEAP_ADDRESS?
     property class_name : String
     property file : String?
-    property line : String?
+    property line : Int32?
     def initialize(@class_name : String, @class_addr : (HEAP_ADDRESS | Nil), @refs : Array(HEAP_ADDRESS))
     end
   end
@@ -28,6 +28,8 @@ module HeapLeak
     property klass : String?
     property references : Array(String)?
     property name : String?
+    property file : String?
+    property line : Int32?
   end
 
   class Heap
@@ -66,6 +68,8 @@ module HeapLeak
         if (obj.type == "CLASS" || obj.type == "MODULE") && !(name=obj.name).nil?
           types[addr] = name
         end
+        short_obj.file = obj.file unless obj.file.nil?
+        short_obj.line = obj.line unless obj.line.nil?
 
         objects[addr] = short_obj
         fill_backref(addr, short_obj)
