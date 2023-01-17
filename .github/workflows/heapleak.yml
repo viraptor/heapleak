@@ -4,8 +4,8 @@ on: [push]
 
 jobs:
   build:
-
-    runs-on: crystallang/crystal:1.7
+    runs-on: ubuntu-latest
+    container: crystallang/crystal:1.7
     steps:
       - uses: actions/checkout@v3
 
