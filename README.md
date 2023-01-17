@@ -48,3 +48,11 @@ This should produce a diagram like this:
 ![](img/example.png)
 
 The initial selected "leaked" objects are marked with blue colour.
+
+Other related projects
+----------------------
+
+- [heapy](https://github.com/zombocom/heapy)
+- [stackprof](https://github.com/tmm1/stackprof)
+
+Why not use heapy instead? Heapy identifies the leaked objects like this project, but it does not find the common starting element. This one is also ~10x faster, which matters for 1GB+ heaps.
