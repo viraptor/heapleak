@@ -141,4 +141,36 @@ module HeapLeak
       "Heap (objects: #{objects.size} types: #{types.size} refs: #{back_refs.size})"
     end
   end
+
+  class NodeHeap
+    def initialize(io : IO)
+      load(io)
+    end
+
+    def load(io)
+      pull = JSON::PullParser.new(io)
+      pull.read_object { |key|
+        puts "top: #{key}"
+        if key == "snapshot"
+          load_top_snapshot(pull)
+        elsif key == "nodes"
+          load_top_nodes(pull)
+        elsif key == "edges"
+          load_top_edges(pull)
+        else
+          pull.read_raw
+        end
+      }
+    end
+
+    def load_top_edges(pull)
+        pull.read_array { pull.read_int }
+    end
+    def load_top_nodes(pull)
+      pull.read_array { pull.read_int }
+    end
+    def load_top_snapshot(pull)
+      pull.read_raw
+    end
+  end
 end
